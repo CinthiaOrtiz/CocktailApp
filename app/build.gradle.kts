@@ -27,20 +27,24 @@ android {
             )
         }
     }
+
+    // Habilitación del Desugaring (para Java 8+)
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+        isCoreLibraryDesugaringEnabled = true // ✅ Asegurarse de habilitar esta opción
     }
+
     kotlinOptions {
         jvmTarget = "11"
     }
+
     buildFeatures {
         compose = true
     }
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -51,6 +55,12 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.gson)
     implementation(libs.coil.compose)
+    implementation(libs.ads.mobile.sdk)
+
+    // Dependencia de desugaring correcta
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.3") // ✅ Asegurarse de que esta versión sea 2.1.3
+
+    // Test dependencies
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
