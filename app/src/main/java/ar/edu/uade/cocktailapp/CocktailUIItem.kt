@@ -43,9 +43,10 @@ fun CocktailUIItem(
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(180.dp)
+                    .height(330.dp) // Aumentada de 180.dp a 260.dp
                     .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
             )
+
             Column(
                 modifier = Modifier
                     .padding(16.dp)
