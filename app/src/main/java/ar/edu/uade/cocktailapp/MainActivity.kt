@@ -26,6 +26,7 @@ class MainActivity : ComponentActivity() {
                         cocktailList = getCocktailList(),
                         modifier = Modifier.padding(innerPadding)
                         //uiuiui
+                        // bkjnjkjk
                     )
                 }
             }
