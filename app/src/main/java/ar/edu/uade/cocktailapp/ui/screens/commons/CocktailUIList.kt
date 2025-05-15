@@ -1,10 +1,13 @@
-package ar.edu.uade.cocktailapp
+package ar.edu.uade.cocktailapp.ui.screens.commons
 
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.lazy.items
+import ar.edu.uade.cocktailapp.data.Cocktail
+
+//list cocteles
+
 @Composable
 fun CocktailUIList(
     list: List<Cocktail>,
@@ -17,7 +20,8 @@ fun CocktailUIList(
             items = list,
             key = { it -> it.idDrink}
         ) {
-            cocktail -> CocktailUIItem(cocktail)
+            cocktail ->
+            CocktailUIItem(cocktail)
         }
     }
 

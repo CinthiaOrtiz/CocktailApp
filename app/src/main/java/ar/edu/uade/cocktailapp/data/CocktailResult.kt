@@ -1,4 +1,4 @@
-package ar.edu.uade.cocktailapp
+package ar.edu.uade.cocktailapp.data
 
 
 data class CocktailResult(

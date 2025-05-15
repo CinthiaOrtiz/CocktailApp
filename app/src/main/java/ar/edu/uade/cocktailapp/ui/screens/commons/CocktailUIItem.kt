@@ -1,4 +1,4 @@
-package ar.edu.uade.cocktailapp
+package ar.edu.uade.cocktailapp.ui.screens.commons
 
 
 import androidx.compose.foundation.background
@@ -20,6 +20,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import ar.edu.uade.cocktailapp.data.Cocktail
 import coil.compose.AsyncImage
 @Composable
 fun CocktailUIItem(

@@ -1,4 +1,4 @@
-package ar.edu.uade.cocktailapp
+package ar.edu.uade.cocktailapp.ui.screens.cocktaillist
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -15,10 +15,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import ar.edu.uade.cocktailapp.ui.screens.commons.CocktailUIList
 import ar.edu.uade.cocktailapp.ui.theme.CocktailAppTheme
 
 @Composable
-fun CocktailListScreen(cocktailList: List<Cocktail>, modifier: Modifier = Modifier) {
+fun CocktailListScreen(
+    // NO RECIBE MAS LA LISTA. RECIBE UN VIEW MODEL
+    //cocktailList: List<Cocktail>,
+    modifier: Modifier = Modifier,
+    vm : CocktailListScreenViewModel = viewModel()
+
+)
+
+{
     Column (
         modifier = Modifier.fillMaxSize().padding(16.dp)
     )
@@ -38,7 +48,7 @@ fun CocktailListScreen(cocktailList: List<Cocktail>, modifier: Modifier = Modifi
 
         Spacer(modifier = Modifier.height(12.dp))
         //lista
-        CocktailUIList(cocktailList, Modifier.fillMaxSize())
+        CocktailUIList(vm.uiState.cocktailList, Modifier.fillMaxSize()) //LLAMO A LA LISTA DE COCTELES
 
     }
 
