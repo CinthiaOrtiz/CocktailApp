@@ -57,6 +57,9 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.ads.mobile.sdk)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.converter.gson)
+    implementation(libs.retrofit)
+    implementation(libs.androidx.navigation.compose)
 
     // Dependencia de desugaring correcta
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.3") // ✅ Asegurarse de que esta versión sea 2.1.3

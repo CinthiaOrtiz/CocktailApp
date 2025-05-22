@@ -1,5 +1,6 @@
 package ar.edu.uade.cocktailapp.ui.screens.cocktaillist
 
+import ads_mobile_sdk.ui
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,7 +29,7 @@ class CocktailListScreenViewModel(
         private set
 
     init {
-        fetchCocktail()
+        // fetchCocktail()
     }
 
     private var fetchJob: Job? = null
@@ -39,11 +40,13 @@ class CocktailListScreenViewModel(
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
             try {
-                uiState = uiState.copy(cocktailList = cocktailRepository.fetchCocktail())
+                // repositorio cuando busca los cocteles, le pasa el texto de busqueda //cocktailRepository.fetchCocktail
+                // eso se traslada al repositorio, este se lo translada al cocktailDataSouce y este a la API.getCocktailSearch
+                uiState = uiState.copy(cocktailList = cocktailRepository.fetchCocktail(uiState.searchQuery ))
 
             }
             catch (e: IOException) {
-                Log.e("CocktailApp", "Error recuperando lista de Anime ")
+                Log.e("CocktailApp", "Error recuperando lista de Cocteles ")
             }
 
 
@@ -56,6 +59,14 @@ class CocktailListScreenViewModel(
         //uiState = uiState.copy(cocktailList = cocktailRepository.fetchCocktail())
 
     }
+
+    // linea de busqueda -- CUANDO CAMBIE LA BUSQUEDA -- VOY A ACTUALIZAR EL ESTADO. searchQuery ingreso escrito del usuario
+    // funcion tiene la .copia. searchquery cambia por search. cocktailList se mantiene
+    fun searchChange(search: String) {
+        uiState = uiState.copy(searchQuery = search, cocktailList = uiState.cocktailList)
+
+    }
+
 
 }
 

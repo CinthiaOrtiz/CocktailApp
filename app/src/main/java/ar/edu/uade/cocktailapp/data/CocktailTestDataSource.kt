@@ -1,14 +1,17 @@
 package ar.edu.uade.cocktailapp.data
 
+import android.icu.text.StringSearch
 import android.util.Log
 import com.google.gson.Gson
 import kotlinx.coroutines.delay
+
+// DEPRECADO !
 
 class CocktailTestDataSource : ICocktailDataSource {
 
     //por fuera, solo acceso a la lista. No al json.
 
-    override suspend fun getCocktailList(): List<Cocktail> {
+    override suspend fun getCocktailList(search: String): List<Cocktail> {
         delay(5000)
 
         //Thread.sleep(5000)
