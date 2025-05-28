@@ -1,9 +1,10 @@
 package ar.edu.uade.cocktailapp.domain
 
-import android.icu.text.StringSearch
+import android.adservices.adid.AdId
 import ar.edu.uade.cocktailapp.data.Cocktail
 
 interface ICocktailRepository {
-    suspend fun fetchCocktail(search: String) : List<Cocktail>
+    suspend fun fetchCocktails(search: String) : List<Cocktail>
+    suspend fun fetchCocktail(cocktailId: Int) : Cocktail
 
 }

@@ -11,7 +11,8 @@ import ar.edu.uade.cocktailapp.data.Cocktail
 @Composable
 fun CocktailUIList(
     list: List<Cocktail>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: (Int) -> Unit
 ){
     LazyColumn (
         modifier = modifier
@@ -21,7 +22,7 @@ fun CocktailUIList(
             key = { it -> it.idDrink}
         ) {
             cocktail ->
-            CocktailUIItem(cocktail)
+            CocktailUIItem(cocktail, onClick= onClick)
         }
     }
 

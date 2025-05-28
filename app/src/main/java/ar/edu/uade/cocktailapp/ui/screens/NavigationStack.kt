@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import ar.edu.uade.cocktailapp.ui.screens.cocktaildetail.CocktailDetailScreen
 import ar.edu.uade.cocktailapp.ui.screens.cocktaillist.CocktailListScreen
 import ar.edu.uade.cocktailapp.ui.screens.splash.SplashScreen
 
@@ -22,10 +23,12 @@ fun NavigationStack() {
             SplashScreen(navController = navController)
         }
         composable (route = Screens.CocktailList.route) {
-            CocktailListScreen()
+            CocktailListScreen(navController = navController)
         }
-        composable (route = Screens.CocktailDetail.route) {
-            // CocktailDetailScreen()
+        composable (route = Screens.CocktailDetail.route + "/{cocktailId}") {
+            var id = it.arguments?.getString("cocktailId")
+            val cocktailId = id?.toIntOrNull()
+            CocktailDetailScreen(cocktailId ?: 0)
         }
 
     }

@@ -39,7 +39,7 @@ class CocktailListScreenViewModel(
         fetchJob = viewModelScope.launch {
             try {
                 // Hago la llamada a la API a través del repositorio
-                val result = cocktailRepository.fetchCocktail(uiState.searchQuery)
+                val result = cocktailRepository.fetchCocktails(uiState.searchQuery)
 
                 // Actualizo el estado con la lista recibida
                 uiState = uiState.copy(cocktailList = result)

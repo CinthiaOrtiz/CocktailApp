@@ -7,7 +7,13 @@ class CocktailRepository  (
     val cocktailDataSource : ICocktailDataSource = CocktailApiDataSource()
 ): ICocktailRepository
 {
-    override suspend fun fetchCocktail(search: String) : List<Cocktail> {
+    override suspend fun fetchCocktails(search: String) : List<Cocktail> {
         return cocktailDataSource.getCocktailList(search)
     }
+
+    override suspend fun fetchCocktail(cocktailId: Int): Cocktail {
+        return cocktailDataSource.getCocktailById(cocktailId)
+    }
 }
+
+

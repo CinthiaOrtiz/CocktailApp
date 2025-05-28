@@ -25,6 +25,10 @@ class CocktailTestDataSource : ICocktailDataSource {
         return cocktailResult.drinks
     }
 
+    override suspend fun getCocktailById(coktailId: Int): Cocktail {
+        return getCocktailList("")[0]
+    }
+
 
     private var json = """
     {

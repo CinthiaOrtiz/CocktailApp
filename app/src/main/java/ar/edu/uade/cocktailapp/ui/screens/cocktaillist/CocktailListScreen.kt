@@ -21,6 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import ar.edu.uade.cocktailapp.ui.screens.Screens
 import ar.edu.uade.cocktailapp.ui.screens.commons.CocktailUIList
 import ar.edu.uade.cocktailapp.ui.theme.CocktailAppTheme
 
@@ -29,13 +31,16 @@ fun CocktailListScreen(
     // NO RECIBE MAS LA LISTA. RECIBE UN VIEW MODEL
     //cocktailList: List<Cocktail>,
     modifier: Modifier = Modifier,
-    vm : CocktailListScreenViewModel = viewModel()
+    vm : CocktailListScreenViewModel = viewModel(),
+    navController: NavHostController
 
 )
 
 {
     Column (
-        modifier = Modifier.fillMaxSize().padding(16.dp)
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
     )
 
     {
@@ -76,8 +81,15 @@ fun CocktailListScreen(
 
 
         Spacer(modifier = Modifier.height(12.dp))
-        //lista
-        CocktailUIList(vm.uiState.cocktailList, Modifier.fillMaxSize()) //LLAMO A LA LISTA DE COCTELES
+        //lista     //LLAMO A LA LISTA DE COCTELES
+        CocktailUIList(
+            vm.uiState.cocktailList, Modifier.fillMaxSize(),
+            onClick = {
+                id ->
+                navController.navigate(Screens.CocktailDetail.route + "/${id}")
+
+            }
+        )
 
     }
 

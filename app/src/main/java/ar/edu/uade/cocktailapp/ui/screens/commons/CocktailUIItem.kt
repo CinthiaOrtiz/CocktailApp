@@ -2,6 +2,7 @@ package ar.edu.uade.cocktailapp.ui.screens.commons
 
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,10 +26,14 @@ import coil.compose.AsyncImage
 @Composable
 fun CocktailUIItem(
     cocktail: Cocktail,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: (Int) -> Unit
 ) {
     Card(
         modifier = modifier
+            .clickable{
+                onClick(cocktail.idDrink)
+            }
             .padding(8.dp)
             .fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
