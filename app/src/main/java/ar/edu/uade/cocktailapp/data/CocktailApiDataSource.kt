@@ -32,7 +32,7 @@ class CocktailApiDataSource : ICocktailDataSource {
 
     // RECUPERO CÓCTEL POR ID
     override suspend fun getCocktailById(cocktailId: Int): Cocktail {
-        return RetrofitInstance.cocktailApi.getCocktail(cocktailId).drinks
+        return RetrofitInstance.cocktailApi.getCocktail(cocktailId).drinks.get(index = 0)
 
     }
 }

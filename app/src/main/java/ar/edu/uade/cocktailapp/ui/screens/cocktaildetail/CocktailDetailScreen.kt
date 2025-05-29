@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
-import ar.edu.uade.cocktailapp.ui.screens.commons.CocktailUIItem
 
 @Composable
 fun CocktailDetailScreen(
@@ -15,9 +14,7 @@ fun CocktailDetailScreen(
     modifier: Modifier = Modifier,
     vm: CocktailDetailScreenViewModel = viewModel()
 ) {
-        vm.setCocktailId(cocktailId)
-
-
+    vm.setCocktailId(cocktailId)
     if (vm.uiState.cocktailDetail.idDrink == 0) {
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -29,3 +26,5 @@ fun CocktailDetailScreen(
         CocktailUIItemDetail(vm.uiState.cocktailDetail)
     }
 }
+
+

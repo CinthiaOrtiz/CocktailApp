@@ -8,11 +8,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -25,75 +31,76 @@ import androidx.navigation.NavHostController
 import ar.edu.uade.cocktailapp.ui.screens.Screens
 import ar.edu.uade.cocktailapp.ui.screens.commons.CocktailUIList
 import ar.edu.uade.cocktailapp.ui.theme.CocktailAppTheme
+import kotlinx.coroutines.flow.debounce
 
 @Composable
 fun CocktailListScreen(
-    // NO RECIBE MAS LA LISTA. RECIBE UN VIEW MODEL
-    //cocktailList: List<Cocktail>,
     modifier: Modifier = Modifier,
-    vm : CocktailListScreenViewModel = viewModel(),
+    vm: CocktailListScreenViewModel = viewModel(),
     navController: NavHostController
+) {
+    // Efecto para buscar automáticamente al escribir
+    LaunchedEffect(vm.uiState.searchQuery) {
+        snapshotFlow { vm.uiState.searchQuery }
+            .debounce(500) // Espera 500ms después de dejar de escribir
+            .collect { query ->
+                vm.fetchCocktail()
+            }
+    }
 
-)
-
-{
-    Column (
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
-    )
-
-    {
+    ) {
         Text(
-            text = "LISTADO COCKTAIL API",
-            style = MaterialTheme.typography.headlineLarge.copy( // Asegura que sea grande
-                fontSize = 30.sp, // Ajusta el tamaño de la fuente
-                fontWeight = FontWeight.Bold // Puedes hacer el texto más fuerte
+            text = "CocktailTime",
+            style = MaterialTheme.typography.headlineLarge.copy(
+                fontSize = 30.sp,
+                fontWeight = FontWeight.Bold
             ),
             modifier = modifier
-                .fillMaxWidth() // Asegura que el texto ocupe todo el ancho
-                .padding(vertical = 16.dp), // Espaciado arriba y abajo
-            textAlign = TextAlign.Center // Centra el texto
+                .fillMaxWidth()
+                .padding(vertical = 16.dp),
+            textAlign = TextAlign.Center
         )
+
         Spacer(modifier = Modifier.height(12.dp))
-        //creamos campo de busqueda
 
-        Row (
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-
-        ){
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
             TextField(
                 value = vm.uiState.searchQuery,
                 modifier = Modifier.weight(1f),
-                label = { Text("Busca tu mejor cocktel") },
+                label = { Text("Search your cocktail") },
                 singleLine = true,
-                onValueChange = {vm.searchChange(it)}
+                onValueChange = { vm.searchChange(it) }
             )
+
             Spacer(modifier = Modifier.width(8.dp))
-            Button(
-                onClick = {vm.fetchCocktail()}
+
+            IconButton(
+                onClick = { vm.fetchCocktail() }
             ) {
-                Text("Buscar")
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = "Search"
+                )
             }
         }
 
-
-
         Spacer(modifier = Modifier.height(12.dp))
-        //lista     //LLAMO A LA LISTA DE COCTELES
-        CocktailUIList(
-            vm.uiState.cocktailList, Modifier.fillMaxSize(),
-            onClick = {
-                id ->
-                navController.navigate(Screens.CocktailDetail.route + "/${id}")
 
+        CocktailUIList(
+            vm.uiState.cocktailList,
+            Modifier.fillMaxSize(),
+            onClick = { id ->
+                navController.navigate(Screens.CocktailDetail.route + "/${id}")
             }
         )
-
     }
-
-
 }
-
 

@@ -26,6 +26,7 @@ class CocktailDetailScreenViewModel(
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
             try {
+
                 val detail = cocktailRepository.fetchCocktail(uiState.cocktailId)
 
                 uiState = uiState.copy(
@@ -40,7 +41,6 @@ class CocktailDetailScreenViewModel(
             }
         }
     }
-
 
     // ACTUALIZO EL ID DEL CÓCTEL Y LUEGO LLAMO A LA API PARA RECUPERAR LOS DETALLES
     fun setCocktailId(cocktailId: Int): Unit {

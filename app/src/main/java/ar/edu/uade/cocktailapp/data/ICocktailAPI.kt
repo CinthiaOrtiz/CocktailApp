@@ -22,10 +22,10 @@ suspend fun getCocktailSearch(
 
 
 
-    @GET("cocktail/{cocktailId")
+    @GET("lookup.php")
     suspend fun getCocktail (
-        @Path("cocktailId") cocktailId: Int
-    ) : CocktailDetailResult
+        @Query("i") cocktailId: Int
+    ) : CocktailResult
 
 
 

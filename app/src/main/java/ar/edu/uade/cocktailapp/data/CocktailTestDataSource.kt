@@ -16,9 +16,6 @@ class CocktailTestDataSource : ICocktailDataSource {
 
         //Thread.sleep(5000)
 
-
-
-
         val gson = Gson()
         val cocktailResult = gson.fromJson(json, CocktailResult::class.java)
         Log.d("GSONDATA", cocktailResult.drinks.toString())

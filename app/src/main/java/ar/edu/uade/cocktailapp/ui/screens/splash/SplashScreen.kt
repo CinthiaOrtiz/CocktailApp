@@ -1,14 +1,14 @@
 package ar.edu.uade.cocktailapp.ui.screens.splash
 
-import android.window.SplashScreen
+
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -37,35 +38,43 @@ fun SplashScreen (
             popUpTo("spash") {inclusive = true} //evita volver atras
         }
     }
-
+// Diseño de la SplashScreen
     Box(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF1F1B24)), // fondo oscuro temático
+            .background(Color.Black), // Fondo oscuro para destacar la imagen
         contentAlignment = Alignment.Center
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        // Imagen principal (logo o cóctel)
+        AsyncImage(
+            model = "https://media.istockphoto.com/id/1400681592/es/foto/guarnici%C3%B3n-de-lim%C3%B3n-salpicando-en-copa-de-c%C3%B3ctel-artesanal-rosa.jpg?s=612x612&w=0&k=20&c=Gonqg-MyZ1WnvVZXl4wKiPP5Q41cOOhD19-aDUU1B90=",
+            contentDescription = "Logo Cóctel",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .size(380.dp)
+                .clip(RoundedCornerShape(20.dp))
+                .border(2.dp, Color.White, RoundedCornerShape(20.dp))
+        )
 
-            // Imagen de cóctel
-            AsyncImage(
-                model = "https://cdn-icons-png.flaticon.com/512/3595/3595455.png",
-                contentDescription = "Logo Cóctel",
-                modifier = Modifier
-                    .size(120.dp)
-                    .clip(CircleShape)
-            )
-
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            // Título
+        // Texto en la parte inferior
+        Column(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 60.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Text(
-                text = "Cocktail Explorer",
+                text = "Welcome to CocktailTime!",
                 color = Color.White,
-                fontSize = 24.sp,
+                fontSize = 30.sp,
                 fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = "Discover the best cocktails",
+                color = Color.White.copy(alpha = 0.7f),
+                fontSize = 25.sp
             )
         }
     }
-
 }
+

@@ -5,6 +5,4 @@ import ar.edu.uade.cocktailapp.data.emptyCocktail
 
 data class CocktailDetailScreenState(
     val cocktailId: Int = 0,
-    val cocktailDetail: Cocktail = emptyCocktail()) {
-
-}
+    val cocktailDetail: Cocktail = emptyCocktail()) {}
