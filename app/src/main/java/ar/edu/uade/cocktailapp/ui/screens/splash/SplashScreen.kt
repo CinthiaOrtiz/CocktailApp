@@ -33,12 +33,13 @@ fun SplashScreen (
 {
     LaunchedEffect(Unit) {
         // con un delay de dos seg, pasamos de pantalla
-        delay(2000) //espera 2 segundos
-        navController.navigate(Screens.CocktailList.route) {
-            popUpTo("spash") {inclusive = true} //evita volver atras
+        delay(3000) // espera 2 segundos
+        navController.navigate(Screens.Welcome.route) {
+            popUpTo(Screens.Splash.route) { inclusive = true }
         }
     }
-// Diseño de la SplashScreen
+
+    // Diseño de la SplashScreen
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -51,16 +52,17 @@ fun SplashScreen (
             contentDescription = "Logo Cóctel",
             contentScale = ContentScale.Crop,
             modifier = Modifier
-                .size(380.dp)
+                .size(550.dp) // Ajuste leve del tamaño
                 .clip(RoundedCornerShape(20.dp))
-                .border(2.dp, Color.White, RoundedCornerShape(20.dp))
+                .padding(horizontal = 16.dp) // o el valor que prefieras
+
         )
 
         // Texto en la parte inferior
         Column(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 60.dp),
+                .padding(bottom = 100.dp), // Ajuste: subimos un poco el texto
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
@@ -77,4 +79,3 @@ fun SplashScreen (
         }
     }
 }
-

@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ar.edu.uade.cocktailapp.ui.screens.cocktaildetail.CocktailDetailScreen
 import ar.edu.uade.cocktailapp.ui.screens.cocktaillist.CocktailListScreen
+import ar.edu.uade.cocktailapp.ui.screens.extras.WelcomeScreen
 import ar.edu.uade.cocktailapp.ui.screens.splash.SplashScreen
 
 
@@ -23,6 +24,9 @@ fun NavigationStack() {
         composable(route = Screens.Splash.route) {
             SplashScreen(navController = navController)
         }
+        composable(route = Screens.Welcome.route) {
+            WelcomeScreen(navController = navController)
+        }
         composable (route = Screens.CocktailList.route) {
             CocktailListScreen(navController = navController)
         }
@@ -30,7 +34,10 @@ fun NavigationStack() {
             var id = it.arguments?.getString("cocktailId")
             val cocktailId = id?.toIntOrNull()
             Log.d("PRUEBA DETAIL", cocktailId.toString())
-            CocktailDetailScreen(cocktailId ?: 0)
+            CocktailDetailScreen(
+                cocktailId = cocktailId ?: 0,
+                navController = navController // <--  pasamos el navController
+            )
         }
 
     }

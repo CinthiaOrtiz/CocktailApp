@@ -26,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -45,6 +46,7 @@ fun CocktailListScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(Color.Black) // Fondo negro para toda la pantalla
             .padding(16.dp)
     ) {
         Text(
@@ -52,14 +54,13 @@ fun CocktailListScreen(
             style = MaterialTheme.typography.headlineLarge.copy(
                 fontSize = 45.sp,
                 fontWeight = FontWeight.Bold,
-
+                color = Color.White // Título blanco
             ),
             modifier = modifier
                 .fillMaxWidth()
                 .padding(top = 48.dp, bottom = 24.dp), // <-- Más aire arriba y espacio abajo
             textAlign = TextAlign.Center
         )
-
 
         Spacer(modifier = Modifier.height(12.dp))
 
@@ -73,14 +74,18 @@ fun CocktailListScreen(
                 modifier = Modifier
                     .weight(1f)
                     .clip(RoundedCornerShape(16.dp)),  // Borde redondeado suave
-                label = { Text("Search your cocktail") },
+                label = { Text("Search your cocktail", color = Color.White.copy(alpha = 0.7f)) }, // Etiqueta en blanco suave
                 singleLine = true,
                 onValueChange = { vm.searchChange(it) },
                 colors = TextFieldDefaults.colors(
-                    focusedContainerColor = MaterialTheme.colorScheme.surface,
-                    unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant
-                ),
-                shape = RoundedCornerShape(16.dp)
+                    focusedTextColor = Color.Black, // Texto oscuro sobre fondo claro
+                    unfocusedTextColor = Color.Black,
+                    focusedContainerColor = Color(0xFFF5F5F5), // Gris claro (blanco crema)
+                    unfocusedContainerColor = Color(0xFFF5F5F5),
+                    cursorColor = Color.Black,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent
+                )
             )
 
 
@@ -98,14 +103,12 @@ fun CocktailListScreen(
                 Icon(
                     imageVector = Icons.Default.Search,
                     contentDescription = "Search",
-                    tint = MaterialTheme.colorScheme.primary
+                    tint = Color.White // Icono blanco para contraste
                 )
             }
-
         }
 
         Spacer(modifier = Modifier.height(12.dp))
-
 
         Box(
             modifier = Modifier
@@ -128,8 +131,8 @@ fun CocktailListScreen(
                 Text(
                     text = "No se encontraron resultados",
                     style = MaterialTheme.typography.titleMedium.copy(
-                        fontSize = 18.sp,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        fontSize = 22.sp,
+                        color = Color.White // Texto blanco para visibilidad
                     ),
                     modifier = Modifier.align(Alignment.Center),
                     textAlign = TextAlign.Center
@@ -139,7 +142,8 @@ fun CocktailListScreen(
             // Mostrar loader mientras carga
             if (vm.uiState.isLoading) {
                 CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center)
+                    modifier = Modifier.align(Alignment.Center),
+                    color = Color.White // Loader blanco para contraste
                 )
             }
         }
