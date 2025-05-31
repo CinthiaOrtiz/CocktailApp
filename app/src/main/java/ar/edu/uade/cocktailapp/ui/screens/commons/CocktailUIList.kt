@@ -10,21 +10,21 @@ import ar.edu.uade.cocktailapp.data.Cocktail
 
 @Composable
 fun CocktailUIList(
-    list: List<Cocktail>,
+    list: List<Cocktail>?,
     modifier: Modifier = Modifier,
     onClick: (Int) -> Unit
-){
-    LazyColumn (
+) {
+    LazyColumn(
         modifier = modifier
     ) {
         items(
-            items = list,
-            key = { it -> it.idDrink}
-        ) {
-            cocktail ->
-            CocktailUIItem(cocktail, onClick= onClick)
+            items = list ?: emptyList(),
+            key = { it.idDrink?.toIntOrNull() ?: 0 } // Convertir a Int, usar 0 si es null
+        ) { cocktail ->
+            CocktailUIItem(
+                cocktail,
+                onClick = { onClick(cocktail.idDrink?.toIntOrNull() ?: 0) }
+            )
         }
     }
-
-
 }

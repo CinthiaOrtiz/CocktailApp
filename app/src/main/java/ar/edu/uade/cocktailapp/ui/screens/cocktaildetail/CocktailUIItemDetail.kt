@@ -1,6 +1,5 @@
 package ar.edu.uade.cocktailapp.ui.screens.cocktaildetail
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -28,19 +27,21 @@ fun CocktailUIItemDetail(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .padding(16.dp),
+            .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // Espacio inicial para separar de la barra superior
+        Spacer(modifier = Modifier.height(24.dp))
+
+        // Imagen del cóctel
         AsyncImage(
             model = cocktail.strDrinkThumb,
             contentDescription = cocktail.strDrink,
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(330.dp)
-                .clip(RoundedCornerShape(16.dp))
-                .padding(15.dp)
+                .height(300.dp) // Un poco más grande
+                .clip(RoundedCornerShape(20.dp))
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -48,30 +49,32 @@ fun CocktailUIItemDetail(
         // Nombre del cóctel
         Text(
             text = cocktail.strDrink,
-            fontSize = 28.sp,
+            fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.primary
+            color = MaterialTheme.colorScheme.primary,
+            textAlign = TextAlign.Center
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
         // Categoría
         Text(
             text = cocktail.strCategory,
             fontSize = 20.sp,
             fontWeight = FontWeight.Medium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Ingredientes y medidas
+        // Ingredientes
         Text(
-            text = "Ingredients",
-            fontSize = 22.sp,
-            fontWeight = FontWeight.SemiBold,
-            textAlign = TextAlign.Center
+            text = "INGREDIENTS",
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.align(Alignment.Start)
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -80,29 +83,34 @@ fun CocktailUIItemDetail(
             val measure = measures.getOrNull(index)?.trim() ?: ""
             Text(
                 text = "- $ingredient ${if (measure.isNotBlank()) "($measure)" else ""}",
-                fontSize = 18.sp,
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.onBackground
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Medium,
+                color = MaterialTheme.colorScheme.onBackground,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 8.dp, bottom = 4.dp)
             )
         }
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Instrucciones
+        // Preparación
         Text(
-            text = "Preparation",
-            fontSize = 22.sp,
-            fontWeight = FontWeight.SemiBold,
-            textAlign = TextAlign.Center
+            text = "PREPARATION",
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.align(Alignment.Start)
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
             text = cocktail.strInstructions,
-            fontSize = 18.sp,
-            textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.onBackground
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Normal,
+            color = MaterialTheme.colorScheme.onBackground,
+            modifier = Modifier.align(Alignment.Start)
         )
     }
 }

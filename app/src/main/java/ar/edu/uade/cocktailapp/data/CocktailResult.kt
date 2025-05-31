@@ -2,7 +2,7 @@ package ar.edu.uade.cocktailapp.data
 
 
 data class CocktailResult(
-    val drinks: List<Cocktail>
+    val drinks: List<Cocktail>?
 )
 
 data class CocktailDetailResult (
@@ -12,7 +12,7 @@ data class CocktailDetailResult (
 data class Cocktail (
     val strDrink: String,
     val strDrinkThumb: String,
-    val idDrink: Int,
+    val idDrink: String?,
     val strCategory : String,
     val strInstructions : String,
     val strIngredient1 : String,
@@ -51,7 +51,7 @@ fun emptyCocktail() : Cocktail {
     return Cocktail(
         "",
         "",
-        0,
+        "",
         "",
         "",
         "",

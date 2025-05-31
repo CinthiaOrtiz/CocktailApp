@@ -15,7 +15,7 @@ fun CocktailDetailScreen(
     vm: CocktailDetailScreenViewModel = viewModel()
 ) {
     vm.setCocktailId(cocktailId)
-    if (vm.uiState.cocktailDetail.idDrink == 0) {
+    if (vm.uiState.cocktailDetail.idDrink.isNullOrBlank()){
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center

@@ -3,7 +3,6 @@ package ar.edu.uade.cocktailapp.data
 import android.util.Log
 import okio.IOException
 import retrofit2.HttpException
-
 // CONSUMIMOS NUESTRA API UTILIZANDO RETROFIT (LIBRERIA)
 
 class CocktailApiDataSource : ICocktailDataSource {
@@ -16,6 +15,13 @@ class CocktailApiDataSource : ICocktailDataSource {
         return try {
             Log.d(TAG, "CocktailApiDataSource.getCocktailList Search: $search")
             val cocktailResult = RetrofitInstance.cocktailApi.getCocktailSearch(search)
+
+            // Si la API devuelve drinks como null, devuelvo una lista vacía
+            if (cocktailResult.drinks == null) {
+                Log.d(TAG, "No se encontraron cócteles")
+                return emptyList()
+            }
+
             Log.d(TAG, "CocktailApiDataSource.getCocktailList Result: ${cocktailResult.drinks.size}")
             return cocktailResult.drinks
         } catch (e: HttpException) {
@@ -32,10 +38,16 @@ class CocktailApiDataSource : ICocktailDataSource {
 
     // RECUPERO CÓCTEL POR ID
     override suspend fun getCocktailById(cocktailId: Int): Cocktail {
-        return RetrofitInstance.cocktailApi.getCocktail(cocktailId).drinks.get(index = 0)
-
+        val response = RetrofitInstance.cocktailApi.getCocktail(cocktailId)
+        val drinks = response.drinks
+        if (drinks.isNullOrEmpty()) {
+            throw IllegalStateException("No se encontró el cóctel con ID: $cocktailId")
+        }
+        return drinks[0]
     }
+
 }
+
         /*
         return try {
             // Llamo a la API de búsqueda por ID

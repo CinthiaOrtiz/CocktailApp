@@ -32,7 +32,7 @@ fun CocktailUIItem(
     Card(
         modifier = modifier
             .clickable{
-                onClick(cocktail.idDrink)
+                onClick(cocktail.idDrink?.toIntOrNull() ?: 0)
             }
             .padding(8.dp)
             .fillMaxWidth(),

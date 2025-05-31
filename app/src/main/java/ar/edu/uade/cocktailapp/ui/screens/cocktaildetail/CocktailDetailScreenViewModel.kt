@@ -8,14 +8,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.uade.cocktailapp.data.CocktailApiDataSource
 import ar.edu.uade.cocktailapp.data.CocktailRepository
+import ar.edu.uade.cocktailapp.data.CocktailTestDataSource
 import ar.edu.uade.cocktailapp.domain.ICocktailRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.CancellationException
 
 class CocktailDetailScreenViewModel(
-    private val cocktailRepository: ICocktailRepository = CocktailRepository(CocktailApiDataSource())
-) : ViewModel() {
+   private val cocktailRepository: ICocktailRepository = CocktailRepository(CocktailApiDataSource())
+) : ViewModel()
+
+{
 
     var uiState by mutableStateOf(CocktailDetailScreenState())
         private set

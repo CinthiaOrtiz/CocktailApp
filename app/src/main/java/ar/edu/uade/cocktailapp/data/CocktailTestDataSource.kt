@@ -6,25 +6,43 @@ import com.google.gson.Gson
 import kotlinx.coroutines.delay
 
 // DEPRECADO !
-
 class CocktailTestDataSource : ICocktailDataSource {
 
-    //por fuera, solo acceso a la lista. No al json.
+    // por fuera, solo acceso a la lista. No al json.
 
-    override suspend fun getCocktailList(search: String): List<Cocktail> {
-        delay(5000)
-
-        //Thread.sleep(5000)
-
+    private val cachedCocktails: List<Cocktail> by lazy {
         val gson = Gson()
         val cocktailResult = gson.fromJson(json, CocktailResult::class.java)
-        Log.d("GSONDATA", cocktailResult.drinks.toString())
-        return cocktailResult.drinks
+        cocktailResult.drinks ?: emptyList()
     }
 
-    override suspend fun getCocktailById(coktailId: Int): Cocktail {
-        return getCocktailList("")[0]
+    override suspend fun getCocktailList(search: String): List<Cocktail>? {
+        delay(0)
+
+        // Filtrar los resultados por el search
+        return cachedCocktails.filter { cocktail ->
+            cocktail.strDrink.contains(search, ignoreCase = true)
+        }
     }
+
+    // RECUPERO CÓCTEL POR ID
+    override suspend fun getCocktailById(cocktailId: Int): Cocktail {
+        return cachedCocktails.find { it.idDrink?.toIntOrNull() == cocktailId }
+            ?: throw IllegalStateException("No se encontró el cóctel con ID: $cocktailId")
+    }
+
+
+
+    /* USANDO RETROFIR
+    override suspend fun getCocktailById(cocktailId: Int): Cocktail {
+        val response = RetrofitInstance.cocktailApi.getCocktail(cocktailId)
+        val drinks = response.drinks
+        if (drinks.isNullOrEmpty()) {
+            throw IllegalStateException("No se encontró el cóctel con ID: $cocktailId")
+        }
+        return drinks[0]
+    } */
+
 
 
     private var json = """
@@ -544,3 +562,4 @@ class CocktailTestDataSource : ICocktailDataSource {
 
 
 }
+
