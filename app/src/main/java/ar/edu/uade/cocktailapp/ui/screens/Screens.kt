@@ -6,7 +6,7 @@ sealed class Screens(val route: String) {
     object Welcome : Screens("welcome")
     object CocktailList: Screens("cocktail_list_screen")
     object CocktailDetail : Screens("cocktail_detail_screen")
-
+    object Login : Screens("login")
 
 
 

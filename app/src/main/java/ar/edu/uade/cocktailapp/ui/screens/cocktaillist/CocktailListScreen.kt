@@ -40,7 +40,8 @@ import ar.edu.uade.cocktailapp.ui.screens.commons.CocktailUIList
 fun CocktailListScreen(
     modifier: Modifier = Modifier,
     vm: CocktailListScreenViewModel = viewModel(),
-    navController: NavHostController
+    navController: NavHostController,
+    onLogoutClick: () -> Unit
 ) {
 
     Column(

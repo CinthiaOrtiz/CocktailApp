@@ -1,34 +1,32 @@
-package ar.edu.uade.cocktailapp.ui.screens.extras
+// ui/screens/login/LoginScreen.kt
+
+package ar.edu.uade.cocktailapp.ui.screens.login
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import ar.edu.uade.cocktailapp.ui.screens.Screens
 import coil.compose.AsyncImage
 
 @Composable
-fun WelcomeScreen(navController: NavHostController) {
+fun LoginScreen(
+    navController: NavHostController,
+    onGoogleLoginClick: () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -43,26 +41,24 @@ fun WelcomeScreen(navController: NavHostController) {
         ) {
             // Texto superior
             Text(
-                text = "Welcome to start this unique experience at CocktailTime!",
+                text = "Login to access your cocktails!",
                 color = Color.White,
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
-                lineHeight = 38.sp, // Ajuste de espacio entre líneas
+                lineHeight = 38.sp,
                 modifier = Modifier.padding(top = 32.dp)
             )
 
-
             // Imagen
             AsyncImage(
-                model = "https://media.istockphoto.com/id/1400681592/es/foto/guarnici%C3%B3n-de-lim%C3%B3n-salpicando-en-copa-de-c%C3%B3ctel-artesanal-rosa.jpg?s=612x612&w=0&k=20&c=Gonqg-MyZ1WnvVZXl4wKiPP5Q41cOOhD19-aDUU1B90=",
-                contentDescription = "Logo Cóctel",
+                model = "https://images.unsplash.com/photo-1528691073726-1e353d8e3a7e?auto=format&fit=crop&w=800&q=60",
+                contentDescription = "Cocktail login image",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(550.dp) // Ajuste leve del tamaño
+                    .size(550.dp)
                     .clip(RoundedCornerShape(20.dp))
-                    .padding(horizontal = 16.dp) // o el valor que prefieras
-
+                    .padding(horizontal = 16.dp)
             )
 
             // Frase + botón
@@ -71,7 +67,7 @@ fun WelcomeScreen(navController: NavHostController) {
                 verticalArrangement = Arrangement.Bottom
             ) {
                 Text(
-                    text = "Are you ready to start this journey?",
+                    text = "Sign in with Google to continue",
                     color = Color.White.copy(alpha = 0.7f),
                     fontSize = 20.sp,
                     textAlign = TextAlign.Center
@@ -80,20 +76,17 @@ fun WelcomeScreen(navController: NavHostController) {
                 Spacer(modifier = Modifier.height(24.dp))
 
                 Button(
-                    onClick = {
-                        navController.navigate(Screens.Login.route) {
-                            popUpTo(Screens.Welcome.route) { inclusive = true }
-                        }
-                    },
+                    onClick = { onGoogleLoginClick() },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.White,
                         contentColor = Color.Black
                     ),
                     shape = RoundedCornerShape(12.dp)
                 ) {
-                    Text("START")
+                    Text("Sign in with Google")
                 }
 
+                Spacer(modifier = Modifier.height(24.dp))
             }
         }
     }

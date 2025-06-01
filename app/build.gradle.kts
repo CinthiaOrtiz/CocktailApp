@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -60,6 +61,16 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.retrofit)
     implementation(libs.androidx.navigation.compose)
+
+    // Importa la BoM de Firebase para gestionar las versiones de las bibliotecas
+    implementation(platform("com.google.firebase:firebase-bom:33.14.0"))
+
+    // Firebase Authentication
+    implementation("com.google.firebase:firebase-auth-ktx")
+
+// Google Sign-In
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
+
 
     // Dependencia de desugaring correcta
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.3") // Asegurarse de que esta versión sea 2.1.3

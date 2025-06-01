@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "944814085604",
+    "project_id": "cocktailapp-da566",
+    "storage_bucket": "cocktailapp-da566.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:944814085604:android:2d60e50de4c03acf6ba3f1",
+        "android_client_info": {
+          "package_name": "ar.edu.uade.cocktailapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "944814085604-tnahoujhmkd155bh6cj9qnqhbena1c2n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ar.edu.uade.cocktailapp",
+            "certificate_hash": "b07411922be701853e69a04b3475a54abfd4757d"
+          }
+        },
+        {
+          "client_id": "944814085604-9s00p4v5tm9m4qinv3q6iu73hb4ijuvt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAbcP1I5a81k_ITevYnvIDMHE2VB1zOIA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "944814085604-9s00p4v5tm9m4qinv3q6iu73hb4ijuvt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
