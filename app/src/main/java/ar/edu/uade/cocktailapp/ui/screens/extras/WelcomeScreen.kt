@@ -34,6 +34,7 @@ fun WelcomeScreen(navController: NavHostController) {
             .fillMaxSize()
             .background(Color.Black)
     ) {
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -41,25 +42,39 @@ fun WelcomeScreen(navController: NavHostController) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
+            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(24.dp))
+
             // Texto superior
             Text(
-                text = "Welcome to start this unique experience at CocktailTime!",
+                text = "WELCOME",
                 color = Color.White,
-                fontSize = 28.sp,
+                fontSize = 45.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 lineHeight = 38.sp, // Ajuste de espacio entre líneas
                 modifier = Modifier.padding(top = 32.dp)
             )
 
+            // Texto superior
+            Text(
+                text = "to start this unique experience",
+                color = Color.White,
+                fontSize = 25.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                lineHeight = 30.sp, // Ajuste de espacio entre líneas
+                //modifier = Modifier.padding(top = 32.dp)
+            )
+
 
             // Imagen
             AsyncImage(
-                model = "https://media.istockphoto.com/id/1400681592/es/foto/guarnici%C3%B3n-de-lim%C3%B3n-salpicando-en-copa-de-c%C3%B3ctel-artesanal-rosa.jpg?s=612x612&w=0&k=20&c=Gonqg-MyZ1WnvVZXl4wKiPP5Q41cOOhD19-aDUU1B90=",
+                model = "https://tse4.mm.bing.net/th?id=OIP._kkdaJRFjgQwr98VihROcQHaE7&pid=Api&P=0&h=180",
                 contentDescription = "Logo Cóctel",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(550.dp) // Ajuste leve del tamaño
+                    .size(400.dp) // Ajuste leve del tamaño
                     .clip(RoundedCornerShape(20.dp))
                     .padding(horizontal = 16.dp) // o el valor que prefieras
 

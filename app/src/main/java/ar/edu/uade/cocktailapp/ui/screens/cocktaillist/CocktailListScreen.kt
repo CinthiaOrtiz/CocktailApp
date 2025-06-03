@@ -1,6 +1,7 @@
 package ar.edu.uade.cocktailapp.ui.screens.cocktaillist
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,6 +16,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -27,22 +30,29 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import ar.edu.uade.cocktailapp.R
 import ar.edu.uade.cocktailapp.ui.screens.Screens
 import ar.edu.uade.cocktailapp.ui.screens.commons.CocktailUIList
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun CocktailListScreen(
     modifier: Modifier = Modifier,
     vm: CocktailListScreenViewModel = viewModel(),
     navController: NavHostController,
-    onLogoutClick: () -> Unit
+    onLogoutClick: () -> Unit,
+
 ) {
+    val context = LocalContext.current // Necesario para revocar acceso a Google
 
     Column(
         modifier = Modifier
@@ -50,6 +60,48 @@ fun CocktailListScreen(
             .background(Color.Black) // Fondo negro para toda la pantalla
             .padding(16.dp)
     ) {
+        // 🔹 Fila superior con el nombre del usuario y botón Logout
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp, bottom = 8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            //MOSTRAMOS EN PANTALLA NOMBRE USUARIO
+            Text(
+                text = "Hello, ${vm.uiState.userName ?: "Usuario"}", // Nombre del usuario
+                color = Color.White,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Medium
+            )
+
+            Button(
+                onClick = {
+                    val googleSignInClient = GoogleSignIn.getClient(
+                        context,
+                        GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                            .requestIdToken(context.getString(R.string.default_web_client_id))
+                            .requestEmail()
+                            .build()
+                    )
+                    googleSignInClient.signOut().addOnCompleteListener {
+                        googleSignInClient.revokeAccess().addOnCompleteListener {
+                            FirebaseAuth.getInstance().signOut()
+                            onLogoutClick()
+                        }
+                    }
+                },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.White,
+                    contentColor = Color.Black
+                ),
+                shape = RoundedCornerShape(12.dp)
+            ) {
+                Text("LOGOUT")
+            }
+        }
+
         Text(
             text = "CocktailTime",
             style = MaterialTheme.typography.headlineLarge.copy(
@@ -59,12 +111,13 @@ fun CocktailListScreen(
             ),
             modifier = modifier
                 .fillMaxWidth()
-                .padding(top = 48.dp, bottom = 24.dp), // <-- Más aire arriba y espacio abajo
+                .padding(top = 8.dp, bottom = 24.dp), // espacio después del saludo
             textAlign = TextAlign.Center
         )
 
         Spacer(modifier = Modifier.height(12.dp))
 
+        // 🔍 Buscador
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -74,21 +127,20 @@ fun CocktailListScreen(
                 value = vm.uiState.searchQuery,
                 modifier = Modifier
                     .weight(1f)
-                    .clip(RoundedCornerShape(16.dp)),  // Borde redondeado suave
-                label = { Text("Search your cocktail", color = Color.White.copy(alpha = 0.7f)) }, // Etiqueta en blanco suave
+                    .clip(RoundedCornerShape(16.dp)),
+                label = { Text("Find your cocktail", color = Color.Black.copy(alpha = 0.7f)) },
                 singleLine = true,
                 onValueChange = { vm.searchChange(it) },
                 colors = TextFieldDefaults.colors(
-                    focusedTextColor = Color.Black, // Texto oscuro sobre fondo claro
+                    focusedTextColor = Color.Black,
                     unfocusedTextColor = Color.Black,
-                    focusedContainerColor = Color(0xFFF5F5F5), // Gris claro (blanco crema)
+                    focusedContainerColor = Color(0xFFF5F5F5),
                     unfocusedContainerColor = Color(0xFFF5F5F5),
                     cursorColor = Color.Black,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent
                 )
             )
-
 
             Spacer(modifier = Modifier.width(4.dp))
 
@@ -104,7 +156,7 @@ fun CocktailListScreen(
                 Icon(
                     imageVector = Icons.Default.Search,
                     contentDescription = "Search",
-                    tint = Color.White // Icono blanco para contraste
+                    tint = Color.White
                 )
             }
         }
@@ -116,7 +168,7 @@ fun CocktailListScreen(
                 .fillMaxSize()
                 .padding(8.dp)
         ) {
-            // Mostrar lista principal (o resultados de búsqueda)
+            // Mostrar lista principal
             if (!vm.uiState.cocktailList.isNullOrEmpty()) {
                 CocktailUIList(
                     vm.uiState.cocktailList,
@@ -127,27 +179,27 @@ fun CocktailListScreen(
                 )
             }
 
-            // Mostrar mensaje si la lista está vacía y no está cargando
+            // Mensaje si no hay resultados
             if (vm.uiState.cocktailList.isNullOrEmpty() && !vm.uiState.isLoading) {
                 Text(
                     text = "No se encontraron resultados",
                     style = MaterialTheme.typography.titleMedium.copy(
                         fontSize = 22.sp,
-                        color = Color.White // Texto blanco para visibilidad
+                        color = Color.White
                     ),
                     modifier = Modifier.align(Alignment.Center),
                     textAlign = TextAlign.Center
                 )
             }
 
-            // Mostrar loader mientras carga
+            // Loader mientras carga
             if (vm.uiState.isLoading) {
                 CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.Center),
-                    color = Color.White // Loader blanco para contraste
+                    color = Color.White
                 )
             }
         }
-
     }
 }
+

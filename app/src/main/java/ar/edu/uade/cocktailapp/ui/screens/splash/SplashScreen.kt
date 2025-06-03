@@ -52,7 +52,7 @@ fun SplashScreen (
             contentDescription = "Logo Cóctel",
             contentScale = ContentScale.Crop,
             modifier = Modifier
-                .size(550.dp) // Ajuste leve del tamaño
+                .size(450.dp) // Ajuste leve del tamaño
                 .clip(RoundedCornerShape(20.dp))
                 .padding(horizontal = 16.dp) // o el valor que prefieras
 
@@ -66,7 +66,7 @@ fun SplashScreen (
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Welcome to CocktailTime!",
+                text = "CocktailTime",
                 color = Color.White,
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold

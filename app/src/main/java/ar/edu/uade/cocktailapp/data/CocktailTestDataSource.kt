@@ -21,7 +21,7 @@ class CocktailTestDataSource : ICocktailDataSource {
 
         // Filtrar los resultados por el search
         return cachedCocktails.filter { cocktail ->
-            cocktail.strDrink.contains(search, ignoreCase = true)
+            cocktail.strDrink!!.contains(search, ignoreCase = true)
         }
     }
 

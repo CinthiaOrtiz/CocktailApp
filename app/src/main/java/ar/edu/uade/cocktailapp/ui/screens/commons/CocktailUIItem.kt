@@ -31,7 +31,7 @@ fun CocktailUIItem(
 ) {
     Card(
         modifier = modifier
-            .clickable{
+            .clickable {
                 onClick(cocktail.idDrink?.toIntOrNull() ?: 0)
             }
             .padding(8.dp)
@@ -44,12 +44,12 @@ fun CocktailUIItem(
                 .background(MaterialTheme.colorScheme.surface)
         ) {
             AsyncImage(
-                model = cocktail.strDrinkThumb,
-                contentDescription = cocktail.strDrink,
+                model = cocktail.strDrinkThumb ?: "", // ✅ null-safe
+                contentDescription = cocktail.strDrink ?: "Imagen del cóctel", // ✅ null-safe
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(330.dp) // Aumentada de 180.dp a 260.dp
+                    .height(330.dp)
                     .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
             )
 
@@ -60,21 +60,21 @@ fun CocktailUIItem(
                 horizontalAlignment = Alignment.CenterHorizontally // Centra el contenido
             ) {
                 Text(
-                    text = cocktail.strDrink,
+                    text = cocktail.strDrink ?: "Sin nombre",
                     style = MaterialTheme.typography.titleLarge.copy(
-                        fontSize = 22.sp // Aumenta el tamaño de la fuente
+                        fontSize = 22.sp
                     ),
                     color = MaterialTheme.colorScheme.onSurface,
-                    textAlign = TextAlign.Center // Centra el texto
+                    textAlign = TextAlign.Center
                 )
-                Spacer(modifier = Modifier.height(8.dp)) // Espacio entre los textos
+                Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "ID: ${cocktail.idDrink}",
+                    text = "ID: ${cocktail.idDrink ?: "0"}",
                     style = MaterialTheme.typography.bodyMedium.copy(
-                        fontSize = 16.sp // Aumenta el tamaño de la fuente
+                        fontSize = 16.sp
                     ),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textAlign = TextAlign.Center // Centra el texto
+                    textAlign = TextAlign.Center
                 )
             }
         }

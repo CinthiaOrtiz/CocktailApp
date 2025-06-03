@@ -78,7 +78,7 @@ class MainActivity : ComponentActivity() {
                                     popUpTo(Screens.CocktailList.route) { inclusive = true }
                                 }
                             },
-                            userSignedIn = userSignedIn // 👈 Pasamos el estado a la UI
+                            userSignedIn = userSignedIn //  Pasamos el estado a la UI
                         )
                     }
                 }

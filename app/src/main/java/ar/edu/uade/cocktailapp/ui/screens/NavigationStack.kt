@@ -7,22 +7,24 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import ar.edu.uade.cocktailapp.ui.screens.cocktaildetail.CocktailDetailScreen
 import ar.edu.uade.cocktailapp.ui.screens.cocktaillist.CocktailListScreen
 import ar.edu.uade.cocktailapp.ui.screens.extras.WelcomeScreen
 import ar.edu.uade.cocktailapp.ui.screens.login.LoginScreen
 import ar.edu.uade.cocktailapp.ui.screens.splash.SplashScreen
 import com.google.firebase.auth.FirebaseAuth
+import com.tuapp.ui.screens.cocktaildetail.CocktailDetailScreen
+
+
 @Composable
 fun NavigationStack(
     navController: NavHostController,
-    onGoogleLoginClick: () -> Unit,
+    onGoogleLoginClick: (onSuccess: () -> Unit) -> Unit, // ✅ Modificado para aceptar onSuccess
     onLogoutClick: () -> Unit,
     userSignedIn: Boolean
 ) {
-    // 🚀 Escucha el estado del login y navega automáticamente a CocktailList
+    // 🚀 Redirige automáticamente SOLO si estamos en Login y ya se logueó
     LaunchedEffect(userSignedIn) {
-        if (userSignedIn) {
+        if (userSignedIn && navController.currentDestination?.route == Screens.Login.route) {
             navController.navigate(Screens.CocktailList.route) {
                 popUpTo(Screens.Login.route) { inclusive = true }
             }
@@ -44,6 +46,19 @@ fun NavigationStack(
             WelcomeScreen(navController = navController)
         }
 
+        // 🔑 Pantalla de Login (Google Sign-In)
+        composable(route = Screens.Login.route) {
+            LoginScreen(
+                navController = navController,
+                onGoogleLoginClick = { onSuccess ->
+                    onGoogleLoginClick {
+                        // ✅ Llama a onSuccess cuando el login fue exitoso
+                        onSuccess()
+                    }
+                }
+            )
+        }
+
         // 🏡 Pantalla principal (lista de cócteles)
         composable(route = Screens.CocktailList.route) {
             CocktailListScreen(
@@ -59,14 +74,6 @@ fun NavigationStack(
             CocktailDetailScreen(
                 cocktailId = cocktailId,
                 navController = navController
-            )
-        }
-
-        // 🔑 Pantalla de Login (Google Sign-In)
-        composable(route = Screens.Login.route) {
-            LoginScreen(
-                navController = navController,
-                onGoogleLoginClick = onGoogleLoginClick
             )
         }
     }

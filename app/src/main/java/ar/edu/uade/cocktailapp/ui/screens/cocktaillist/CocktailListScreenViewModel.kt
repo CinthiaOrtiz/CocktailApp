@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.uade.cocktailapp.data.CocktailRepository
 import ar.edu.uade.cocktailapp.domain.ICocktailRepository
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -25,11 +26,21 @@ class CocktailListScreenViewModel(
     private var fetchJob: Job? = null
 
     init {
-        // Carga inicial: buscar 5 cócteles aleatorios
+        // Carga inicial: buscar 10 cócteles aleatorios
         fetchRandomCocktails()
+        //  Cargar el nombre al iniciar
+        loadUserName()
     }
 
-    // FUNCIÓN PARA CARGAR 5 CÓCTELES ALEATORIOS EN EL HOME
+    //ENCUENTRA NOMBRE USUARIO
+    private fun loadUserName() {
+        val firebaseUser = FirebaseAuth.getInstance().currentUser
+        val name = firebaseUser?.displayName ?: firebaseUser?.email?.substringBefore("@") ?: "Usuario"
+
+        uiState = uiState.copy(userName = name)
+    }
+
+    // FUNCIÓN PARA CARGAR 10 CÓCTELES ALEATORIOS EN EL HOME
     private fun fetchRandomCocktails() {
         // Cancelo la corrutina anterior si estaba en ejecución
         fetchJob?.cancel()
@@ -41,7 +52,7 @@ class CocktailListScreenViewModel(
 
                 // Obtengo la lista completa y tomo 5 aleatorios de la BUSQUEDA
                 val allCocktails = cocktailRepository.fetchCocktails("a") ?: emptyList() // Búsqueda general para obtener varios
-                val randomList = allCocktails.take(5) // Limito a 5 resultados
+                val randomList = allCocktails.take(10) // Limito a 10 resultados
 
                 // Actualizo el estado con la lista aleatoria
                 uiState = uiState.copy(
@@ -71,8 +82,8 @@ class CocktailListScreenViewModel(
                 // Hago la llamada a la API a través del repositorio
                 val result = cocktailRepository.fetchCocktails(query)
 
-                // LIMITAR a 5 resultados
-                val limitedResult = result?.take(5) ?: emptyList()
+                // LIMITAR a 10 resultados
+                val limitedResult = result?.take(10) ?: emptyList()
 
                 // Actualizo el estado con la lista recibida y apago la carga
                 uiState = uiState.copy(

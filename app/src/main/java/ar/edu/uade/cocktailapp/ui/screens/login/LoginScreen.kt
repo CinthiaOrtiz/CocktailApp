@@ -19,14 +19,34 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import ar.edu.uade.cocktailapp.ui.screens.Screens
 import coil.compose.AsyncImage
+
+
 
 @Composable
 fun LoginScreen(
     navController: NavHostController,
-    onGoogleLoginClick: () -> Unit
+    onGoogleLoginClick: (onSuccess: () -> Unit) -> Unit, // Ahora recibe una lambda de éxito
+    modifier: Modifier = Modifier,
+    vm: LoginScreenViewModel = viewModel()
 ) {
+//RECIBO EVENTO Y YA ESTA LOGEADO
+    LaunchedEffect(Unit) {
+        vm.uiEvent.collect {
+            event ->
+            navController.navigate(Screens.CocktailList.route) {
+                popUpTo(Screens.Login.route) {inclusive = true}
+            }
+        }
+
+    }
+
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -41,18 +61,18 @@ fun LoginScreen(
         ) {
             // Texto superior
             Text(
-                text = "Login to access your cocktails!",
+                text = "LOGIN to access",
                 color = Color.White,
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
-                lineHeight = 38.sp,
+                //lineHeight = 38.sp,
                 modifier = Modifier.padding(top = 32.dp)
             )
 
             // Imagen
             AsyncImage(
-                model = "https://images.unsplash.com/photo-1528691073726-1e353d8e3a7e?auto=format&fit=crop&w=800&q=60",
+                model = "https://tse2.mm.bing.net/th?id=OIP.d24Qy8S7nDUFUWPzdFWFVwHaFW&pid=Api&P=0&h=180",
                 contentDescription = "Cocktail login image",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -76,7 +96,14 @@ fun LoginScreen(
                 Spacer(modifier = Modifier.height(24.dp))
 
                 Button(
-                    onClick = { onGoogleLoginClick() },
+                    onClick = {
+                        // ✅ Llama a onGoogleLoginClick y navega al home si fue exitoso
+                        onGoogleLoginClick {
+                            navController.navigate(Screens.CocktailList.route) {
+                                popUpTo(Screens.Login.route) { inclusive = true }
+                            }
+                        }
+                    },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.White,
                         contentColor = Color.Black
