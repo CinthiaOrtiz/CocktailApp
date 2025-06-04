@@ -16,7 +16,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import ar.edu.uade.cocktailapp.ui.screens.NavigationStack
 import ar.edu.uade.cocktailapp.ui.screens.Screens
@@ -27,6 +26,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+
+
 class MainActivity : ComponentActivity() {
 
     private lateinit var googleSignInClient: GoogleSignInClient

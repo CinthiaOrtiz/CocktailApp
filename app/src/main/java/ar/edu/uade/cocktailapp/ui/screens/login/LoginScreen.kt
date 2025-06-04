@@ -1,11 +1,8 @@
-// ui/screens/login/LoginScreen.kt
-
 package ar.edu.uade.cocktailapp.ui.screens.login
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -14,18 +11,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import ar.edu.uade.cocktailapp.ui.screens.Screens
 import coil.compose.AsyncImage
-
 
 
 @Composable
@@ -35,6 +27,7 @@ fun LoginScreen(
     modifier: Modifier = Modifier,
     vm: LoginScreenViewModel = viewModel()
 ) {
+
 //RECIBO EVENTO Y YA ESTA LOGEADO
     LaunchedEffect(Unit) {
         vm.uiEvent.collect {
@@ -43,9 +36,7 @@ fun LoginScreen(
                 popUpTo(Screens.Login.route) {inclusive = true}
             }
         }
-
     }
-
 
     Box(
         modifier = Modifier

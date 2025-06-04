@@ -23,6 +23,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ar.edu.uade.cocktailapp.data.Cocktail
 import coil.compose.AsyncImage
+
+//item detalle
+
 @Composable
 fun CocktailUIItem(
     cocktail: Cocktail,

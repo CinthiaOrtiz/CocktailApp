@@ -1,5 +1,6 @@
 package com.tuapp.ui.screens.cocktaildetail
 
+import android.widget.ImageView
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -8,18 +9,19 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import ar.edu.uade.cocktailapp.data.Cocktail
 import ar.edu.uade.cocktailapp.ui.screens.cocktaildetail.CocktailDetailScreenViewModel
-import coil.compose.AsyncImage
+import com.bumptech.glide.Glide
 
-// Pantalla principal de detalle del cóctel
+// Pantalla  detalle del cóctel
+
 @Composable
 fun CocktailDetailScreen(
     cocktailId: Int,
@@ -56,6 +58,7 @@ fun CocktailDetailScreen(
                 }
             }
         }
+
     } else {
         // Llamada al Composable de detalle
         CocktailUIItemDetail(
@@ -109,7 +112,7 @@ fun CocktailUIItemDetail(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-//  FOTO DETAIL
+        // FOTO DETAIL con GLIDE
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -123,10 +126,16 @@ fun CocktailUIItemDetail(
                 colors = CardDefaults.cardColors(containerColor = Color.Transparent),
                 modifier = Modifier.fillMaxSize()
             ) {
-                AsyncImage(
-                    model = cocktail.strDrinkThumb ?: "",
-                    contentDescription = cocktail.strDrink ?: "Imagen del cóctel",
-                    contentScale = ContentScale.Crop,
+                AndroidView(
+                    factory = { context ->
+                        ImageView(context).apply {
+                            Glide.with(context)
+                                .load(cocktail.strDrinkThumb ?: "")
+                                .centerCrop()
+                                .into(this)
+                            scaleType = ImageView.ScaleType.CENTER_CROP
+                        }
+                    },
                     modifier = Modifier
                         .fillMaxSize()
                         .clip(RoundedCornerShape(20.dp))
@@ -136,9 +145,9 @@ fun CocktailUIItemDetail(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Ingredientes
+        // INGREDIENTS AND MEASURES
         Text(
-            text = "INGREDIENTS",
+            text = "INGREDIENTS AND MEASURES",
             fontSize = 22.sp,
             fontWeight = FontWeight.Bold,
             color = Color.White,
@@ -183,7 +192,7 @@ fun CocktailUIItemDetail(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Botón Back: permite volver tocándolo, pero también funciona el botón físico y el swipe back
+        // Botón Back
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -191,7 +200,7 @@ fun CocktailUIItemDetail(
             contentAlignment = Alignment.BottomStart
         ) {
             Button(
-                onClick = { navController.popBackStack() }, // Vuelve manualmente a la pantalla anterior
+                onClick = { navController.popBackStack() },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White,
                     contentColor = Color.Black
@@ -201,9 +210,9 @@ fun CocktailUIItemDetail(
                 Text("BACK")
             }
         }
-
     }
 }
+
 
 // Funciones de extensión para obtener ingredientes y medidas no nulos
 fun Cocktail.getIngredients(): List<String> {

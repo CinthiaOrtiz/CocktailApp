@@ -3,7 +3,6 @@ package ar.edu.uade.cocktailapp.data
 import android.util.Log
 import okio.IOException
 import retrofit2.HttpException
-// CONSUMIMOS NUESTRA API UTILIZANDO RETROFIT (LIBRERIA)
 
 class CocktailApiDataSource : ICocktailDataSource {
     private val TAG = "CocktailApp"
@@ -48,24 +47,3 @@ class CocktailApiDataSource : ICocktailDataSource {
 
 
 }
-
-        /*
-        return try {
-            // Llamo a la API de búsqueda por ID
-            val response = RetrofitInstance.cocktailApi.getCocktail(cocktailId)
-
-            // Devuelvo el primer cóctel si existe, si no devuelvo vacío
-            val cocktail = response.drinks
-            cocktail ?: emptyCocktail()
-
-        } catch (e: HttpException) {
-            Log.e(TAG, "Error de HTTP al buscar cocktail por ID: ${e.code()} ${e.message()}")
-            emptyCocktail()
-        } catch (e: IOException) {
-            Log.e(TAG, "Error de Network al buscar cocktail por ID: ${e.localizedMessage}")
-            emptyCocktail()
-        } catch (e: Exception) {
-            Log.e(TAG, "Error desconocido al buscar cocktail por ID: ${e.localizedMessage}")
-            emptyCocktail()
-        }
-         */

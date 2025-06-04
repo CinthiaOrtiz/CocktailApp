@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("org.jetbrains.kotlin.kapt") // anotaciones de Glide
     id("com.google.gms.google-services")
 }
 
@@ -62,15 +63,18 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.androidx.navigation.compose)
 
+    // Glide para carga de imágenes con AndroidView
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    kapt("com.github.bumptech.glide:compiler:4.16.0") // <- solo si usás @GlideModule
+
     // Importa la BoM de Firebase para gestionar las versiones de las bibliotecas
     implementation(platform("com.google.firebase:firebase-bom:33.14.0"))
 
     // Firebase Authentication
     implementation("com.google.firebase:firebase-auth-ktx")
 
-// Google Sign-In
+    // Google Sign-In
     implementation("com.google.android.gms:play-services-auth:20.7.0")
-
 
     // Dependencia de desugaring correcta
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.3") // Asegurarse de que esta versión sea 2.1.3

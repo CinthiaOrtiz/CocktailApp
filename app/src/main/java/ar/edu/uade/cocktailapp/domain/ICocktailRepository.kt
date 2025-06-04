@@ -1,6 +1,5 @@
 package ar.edu.uade.cocktailapp.domain
 
-import android.adservices.adid.AdId
 import ar.edu.uade.cocktailapp.data.Cocktail
 
 interface ICocktailRepository {

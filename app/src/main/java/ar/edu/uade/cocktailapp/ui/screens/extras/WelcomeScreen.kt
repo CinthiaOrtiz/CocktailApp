@@ -43,20 +43,20 @@ fun WelcomeScreen(navController: NavHostController) {
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Spacer(modifier = Modifier.height(24.dp))
-            Spacer(modifier = Modifier.height(24.dp))
+
 
             // Texto superior
             Text(
                 text = "WELCOME",
                 color = Color.White,
-                fontSize = 45.sp,
+                fontSize = 60.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
-                lineHeight = 38.sp, // Ajuste de espacio entre líneas
-                modifier = Modifier.padding(top = 32.dp)
+                lineHeight = 20.sp, // Ajuste de espacio entre líneas
+                modifier = Modifier.padding(top = 10.dp)
             )
 
-            // Texto superior
+            // Texto
             Text(
                 text = "to start this unique experience",
                 color = Color.White,
@@ -64,7 +64,7 @@ fun WelcomeScreen(navController: NavHostController) {
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 lineHeight = 30.sp, // Ajuste de espacio entre líneas
-                //modifier = Modifier.padding(top = 32.dp)
+
             )
 
 

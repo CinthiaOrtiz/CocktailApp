@@ -2,7 +2,6 @@ package ar.edu.uade.cocktailapp.ui.screens.splash
 
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,21 +31,21 @@ fun SplashScreen (
 )
 {
     LaunchedEffect(Unit) {
-        // con un delay de dos seg, pasamos de pantalla
-        delay(3000) // espera 2 segundos
+        // con un delay de tres seg, pasamos de pantalla
+        delay(3000)
         navController.navigate(Screens.Welcome.route) {
             popUpTo(Screens.Splash.route) { inclusive = true }
         }
     }
 
-    // Diseño de la SplashScreen
+    // Diseño SplashScreen
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black), // Fondo oscuro para destacar la imagen
         contentAlignment = Alignment.Center
     ) {
-        // Imagen principal (logo o cóctel)
+        // Imagen principal
         AsyncImage(
             model = "https://media.istockphoto.com/id/1400681592/es/foto/guarnici%C3%B3n-de-lim%C3%B3n-salpicando-en-copa-de-c%C3%B3ctel-artesanal-rosa.jpg?s=612x612&w=0&k=20&c=Gonqg-MyZ1WnvVZXl4wKiPP5Q41cOOhD19-aDUU1B90=",
             contentDescription = "Logo Cóctel",

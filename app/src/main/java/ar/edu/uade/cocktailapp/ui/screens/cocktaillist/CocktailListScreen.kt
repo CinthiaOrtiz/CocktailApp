@@ -60,7 +60,7 @@ fun CocktailListScreen(
             .background(Color.Black) // Fondo negro para toda la pantalla
             .padding(16.dp)
     ) {
-        // 🔹 Fila superior con el nombre del usuario y botón Logout
+        // Fila superior con el nombre del usuario y botón Logout
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -75,6 +75,9 @@ fun CocktailListScreen(
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Medium
             )
+
+
+            // LOGOUT
 
             Button(
                 onClick = {
@@ -111,13 +114,13 @@ fun CocktailListScreen(
             ),
             modifier = modifier
                 .fillMaxWidth()
-                .padding(top = 8.dp, bottom = 24.dp), // espacio después del saludo
+                .padding(top = 8.dp, bottom = 24.dp),
             textAlign = TextAlign.Center
         )
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        // 🔍 Buscador
+        // Buscador
         Row(
             modifier = Modifier
                 .fillMaxWidth()
