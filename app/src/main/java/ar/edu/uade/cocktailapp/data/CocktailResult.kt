@@ -9,6 +9,12 @@ data class CocktailDetailResult (
     val drinks : Cocktail
 )
 
+
+data class CocktailResponse(
+    val drinks: List<Cocktail>
+)
+
+
 // El sufijo ? indica que la propiedad puede contener un valor nulo (nullable).
 
 data class Cocktail(

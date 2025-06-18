@@ -52,22 +52,22 @@ fun LoginScreen(
         ) {
             // Texto superior
             Text(
-                text = "LOGIN to access",
+                text = "LOGIN",
                 color = Color.White,
-                fontSize = 28.sp,
+                fontSize = 45.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
-                //lineHeight = 38.sp,
+                lineHeight = 38.sp,
                 modifier = Modifier.padding(top = 32.dp)
             )
 
             // Imagen
             AsyncImage(
-                model = "https://tse2.mm.bing.net/th?id=OIP.d24Qy8S7nDUFUWPzdFWFVwHaFW&pid=Api&P=0&h=180",
+                model = "https://www.azumuta.com/wp-content/uploads/2024/03/integrations-logo-google.png",
                 contentDescription = "Cocktail login image",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(550.dp)
+                    .size(350.dp)
                     .clip(RoundedCornerShape(20.dp))
                     .padding(horizontal = 16.dp)
             )

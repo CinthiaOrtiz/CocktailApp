@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import ar.edu.uade.cocktailapp.data.Cocktail
 import ar.edu.uade.cocktailapp.data.CocktailApiDataSource
 import ar.edu.uade.cocktailapp.data.CocktailRepository
+import ar.edu.uade.cocktailapp.data.RetrofitInstance
 import ar.edu.uade.cocktailapp.domain.ICocktailRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -114,4 +115,20 @@ class CocktailDetailScreenViewModel(
                 onResult(document.exists())
             }
     }
+
+    fun fetchRandomCocktail(onSuccess: (Cocktail) -> Unit) {
+        viewModelScope.launch {
+            try {
+                val response = RetrofitInstance.cocktailApi.getRandomCocktail()
+                val cocktail = response.drinks.firstOrNull()
+                if (cocktail != null) {
+                    onSuccess(cocktail)
+                }
+            } catch (e: Exception) {
+                println("Error al obtener cóctel aleatorio: ${e.message}")
+            }
+        }
+    }
+
+
 }

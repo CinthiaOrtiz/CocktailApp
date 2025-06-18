@@ -21,6 +21,8 @@ interface ICocktailAPI {
         @Query("i") cocktailId: Int
     ) : CocktailResult
 
+    @GET("random.php")
+    suspend fun getRandomCocktail(): CocktailResponse
 
 
 }
