@@ -1,3 +1,6 @@
+import org.gradle.kotlin.dsl.annotationProcessor
+import org.gradle.kotlin.dsl.implementation
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -63,15 +66,23 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.androidx.navigation.compose)
 
-    // Glide para carga de imágenes con AndroidView
+    //GLIDE
     implementation("com.github.bumptech.glide:glide:4.16.0")
-    kapt("com.github.bumptech.glide:compiler:4.16.0") // <- solo si usás @GlideModule
+    kapt("com.github.bumptech.glide:compiler:4.16.0")
+
+
 
     // Importa la BoM de Firebase para gestionar las versiones de las bibliotecas
     implementation(platform("com.google.firebase:firebase-bom:33.14.0"))
 
     // Firebase Authentication
     implementation("com.google.firebase:firebase-auth-ktx")
+
+    // Firebase Firestore (necesario para FirebaseFirestore + .toObject)
+    implementation("com.google.firebase:firebase-firestore-ktx:24.11.0")
+
+    // Coroutines + Firebase (necesario para usar .await())
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.1")
 
     // Google Sign-In
     implementation("com.google.android.gms:play-services-auth:20.7.0")

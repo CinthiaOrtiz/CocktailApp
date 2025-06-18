@@ -1,4 +1,4 @@
-package ar.edu.uade.cocktailapp.ui.screens.extras
+package ar.edu.uade.cocktailapp.ui.screens.Welcome
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

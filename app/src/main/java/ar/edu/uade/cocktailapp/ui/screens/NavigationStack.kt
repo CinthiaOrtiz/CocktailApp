@@ -6,10 +6,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import ar.edu.uade.cocktailapp.ui.screens.cocktaillist.CocktailListScreen
-import ar.edu.uade.cocktailapp.ui.screens.extras.WelcomeScreen
+import ar.edu.uade.cocktailapp.ui.screens.Welcome.WelcomeScreen
 import ar.edu.uade.cocktailapp.ui.screens.login.LoginScreen
 import ar.edu.uade.cocktailapp.ui.screens.splash.SplashScreen
 import com.tuapp.ui.screens.cocktaildetail.CocktailDetailScreen
+import ar.edu.uade.cocktailapp.ui.screens.favorites.FavoriteListScreen
 
 
 @Composable
@@ -72,5 +73,12 @@ fun NavigationStack(
                 navController = navController
             )
         }
+
+        composable(route = Screens.Favorites.route) {
+            FavoriteListScreen(navController = navController)
+        }
+
+
+
     }
 }

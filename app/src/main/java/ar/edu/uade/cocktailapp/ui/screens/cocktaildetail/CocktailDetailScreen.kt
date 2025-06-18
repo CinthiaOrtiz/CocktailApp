@@ -4,6 +4,10 @@ import android.widget.ImageView
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
@@ -18,10 +22,48 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import ar.edu.uade.cocktailapp.data.Cocktail
 import ar.edu.uade.cocktailapp.ui.screens.cocktaildetail.CocktailDetailScreenViewModel
+import ar.edu.uade.cocktailapp.ui.screens.splash.SplashScreenLoadingDetail
 import com.bumptech.glide.Glide
 
-// Pantalla  detalle del cóctel
+// Funciones de extensión para obtener ingredientes y medidas no nulos
+fun Cocktail.getIngredients(): List<String> {
+    return listOfNotNull(
+        strIngredient1, strIngredient2, strIngredient3, strIngredient4, strIngredient5,
+        strIngredient6, strIngredient7, strIngredient8, strIngredient9, strIngredient10,
+        strIngredient11, strIngredient12, strIngredient13, strIngredient14, strIngredient15
+    ).filter { it.isNotBlank() }
+}
 
+fun Cocktail.getMeasures(): List<String> {
+    return listOfNotNull(
+        strMeasure1, strMeasure2, strMeasure3, strMeasure4, strMeasure5,
+        strMeasure6, strMeasure7, strMeasure8, strMeasure9, strMeasure10,
+        strMeasure11, strMeasure12, strMeasure13, strMeasure14, strMeasure15
+    ).filter { it.isNotBlank() }
+}
+
+// Composable del botón de favorito ❤️
+@Composable
+fun FavoriteButton(
+    isFavorite: Boolean,
+    onToggleFavorite: () -> Unit
+
+) {
+    IconToggleButton(
+        checked = isFavorite,
+        onCheckedChange = { onToggleFavorite() }
+    ) {
+        Icon(
+            imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+            contentDescription = if (isFavorite) "Quitar de favoritos" else "Agregar a favoritos",
+            tint = if (isFavorite) Color.Red else Color.White,
+            modifier = Modifier.size(30.dp)
+        )
+    }
+}
+
+
+// Pantalla  detalle del cóctel
 @Composable
 fun CocktailDetailScreen(
     cocktailId: Int,
@@ -30,10 +72,15 @@ fun CocktailDetailScreen(
     vm: CocktailDetailScreenViewModel = viewModel()
 ) {
     // Establecemos el ID para que el ViewModel cargue el detalle
-    vm.setCocktailId(cocktailId)
+    LaunchedEffect(cocktailId) {
+        vm.setCocktailId(cocktailId)
+    }
 
     // Mostrar loading si aún no tenemos datos
     if (vm.uiState.cocktailDetail.idDrink.isNullOrBlank()) {
+        SplashScreenLoadingDetail()
+        return
+
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
@@ -58,13 +105,14 @@ fun CocktailDetailScreen(
                 }
             }
         }
-
     } else {
         // Llamada al Composable de detalle
         CocktailUIItemDetail(
             cocktail = vm.uiState.cocktailDetail,
-            navController = navController
+            navController = navController,
+            viewModel = vm // ← Esto es clave
         )
+
     }
 }
 
@@ -73,12 +121,18 @@ fun CocktailDetailScreen(
 fun CocktailUIItemDetail(
     cocktail: Cocktail,
     navController: NavHostController,
+    viewModel: CocktailDetailScreenViewModel, // ← Agregado
     modifier: Modifier = Modifier
-) {
+)
+ {
     val ingredients = cocktail.getIngredients()
     val measures = cocktail.getMeasures()
 
-    Column(
+    // Estado para el botón de favorito ❤️
+     val isFavorite = viewModel.uiState.isFavorite
+
+
+     Column(
         modifier = modifier
             .fillMaxSize()
             .background(Color.Black)
@@ -89,14 +143,29 @@ fun CocktailUIItemDetail(
         Spacer(modifier = Modifier.height(24.dp))
 
         // Nombre del cóctel
-        Text(
-            text = cocktail.strDrink ?: "Sin nombre",
-            fontSize = 30.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth()
-        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = cocktail.strDrink ?: "Sin nombre",
+                fontSize = 30.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White,
+                modifier = Modifier.weight(1f)
+            )
+
+            // botón favorito ❤️
+            FavoriteButton(
+                isFavorite = isFavorite,
+                onToggleFavorite = {
+                    viewModel.toggleFavorite(cocktail)
+                }
+            )
+
+
+
+        }
 
         Spacer(modifier = Modifier.height(12.dp))
 
@@ -211,22 +280,4 @@ fun CocktailUIItemDetail(
             }
         }
     }
-}
-
-
-// Funciones de extensión para obtener ingredientes y medidas no nulos
-fun Cocktail.getIngredients(): List<String> {
-    return listOfNotNull(
-        strIngredient1, strIngredient2, strIngredient3, strIngredient4, strIngredient5,
-        strIngredient6, strIngredient7, strIngredient8, strIngredient9, strIngredient10,
-        strIngredient11, strIngredient12, strIngredient13, strIngredient14, strIngredient15
-    ).filter { it.isNotBlank() }
-}
-
-fun Cocktail.getMeasures(): List<String> {
-    return listOfNotNull(
-        strMeasure1, strMeasure2, strMeasure3, strMeasure4, strMeasure5,
-        strMeasure6, strMeasure7, strMeasure8, strMeasure9, strMeasure10,
-        strMeasure11, strMeasure12, strMeasure13, strMeasure14, strMeasure15
-    ).filter { it.isNotBlank() }
 }

@@ -3,8 +3,10 @@ package ar.edu.uade.cocktailapp.ui.screens.commons
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -38,45 +41,49 @@ fun CocktailUIItem(
                 onClick(cocktail.idDrink?.toIntOrNull() ?: 0)
             }
             .padding(8.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .height(320.dp), // ⬅️ Altura visual igual a favoritos
         shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C1C)) // ✅ Fondo gris oscuro
     ) {
-        Column(
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.surface)
-        ) {
+        Box(modifier = Modifier.fillMaxSize()) {
+
+            // Imagen del cóctel (usando AsyncImage como ya tenías)
             AsyncImage(
                 model = cocktail.strDrinkThumb ?: "", // ✅ null-safe
                 contentDescription = cocktail.strDrink ?: "Imagen del cóctel", // ✅ null-safe
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(330.dp)
+                    .height(300.dp)
                     .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
             )
 
+            // Contenido inferior
             Column(
                 modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth(), // Asegura que la columna ocupe el ancho completo
-                horizontalAlignment = Alignment.CenterHorizontally // Centra el contenido
+                    .align(Alignment.BottomStart)
+                    .fillMaxWidth()
+                    .background(Color(0xFF1C1C1C)) // ✅ mantiene fondo gris
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                // Nombre del cóctel
                 Text(
                     text = cocktail.strDrink ?: "Sin nombre",
-                    style = MaterialTheme.typography.titleLarge.copy(
-                        fontSize = 22.sp
-                    ),
-                    color = MaterialTheme.colorScheme.onSurface,
+                    style = MaterialTheme.typography.titleLarge.copy(fontSize = 22.sp),
+                    color = Color.White,
                     textAlign = TextAlign.Center
                 )
+
                 Spacer(modifier = Modifier.height(4.dp))
+
+                // ID del cóctel
                 Text(
                     text = "ID: ${cocktail.idDrink ?: "0"}",
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        fontSize = 16.sp
-                    ),
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    style = MaterialTheme.typography.bodyMedium.copy(fontSize = 16.sp),
+                    color = Color.White.copy(alpha = 0.7f),
                     textAlign = TextAlign.Center
                 )
             }

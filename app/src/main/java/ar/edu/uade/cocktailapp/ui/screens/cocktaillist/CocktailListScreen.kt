@@ -1,30 +1,13 @@
 package ar.edu.uade.cocktailapp.ui.screens.cocktaillist
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,7 +33,6 @@ fun CocktailListScreen(
     vm: CocktailListScreenViewModel = viewModel(),
     navController: NavHostController,
     onLogoutClick: () -> Unit,
-
 ) {
     val context = LocalContext.current // Necesario para revocar acceso a Google
 
@@ -60,7 +42,7 @@ fun CocktailListScreen(
             .background(Color.Black) // Fondo negro para toda la pantalla
             .padding(16.dp)
     ) {
-        // Fila superior con el nombre del usuario y botón Logout
+        // Fila superior con el nombre del usuario, botón Logout y Favoritos
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -68,7 +50,7 @@ fun CocktailListScreen(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            //MOSTRAMOS EN PANTALLA NOMBRE USUARIO
+            // MOSTRAMOS EN PANTALLA NOMBRE USUARIO
             Text(
                 text = "Hello, ${vm.uiState.userName ?: "Usuario"}", // Nombre del usuario
                 color = Color.White,
@@ -76,41 +58,54 @@ fun CocktailListScreen(
                 fontWeight = FontWeight.Medium
             )
 
-
-            // LOGOUT
-
-            Button(
-                onClick = {
-                    val googleSignInClient = GoogleSignIn.getClient(
-                        context,
-                        GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                            .requestIdToken(context.getString(R.string.default_web_client_id))
-                            .requestEmail()
-                            .build()
+            Row {
+                // BOTÓN FAVORITOS ❤️
+                IconButton(onClick = {
+                    navController.navigate(Screens.Favorites.route)
+                }) {
+                    Icon(
+                        imageVector = Icons.Filled.Favorite,
+                        contentDescription = "Ver favoritos",
+                        tint = Color.Red
                     )
-                    googleSignInClient.signOut().addOnCompleteListener {
-                        googleSignInClient.revokeAccess().addOnCompleteListener {
-                            FirebaseAuth.getInstance().signOut()
-                            onLogoutClick()
+                }
+
+
+                // BOTÓN LOGOUT
+                Button(
+                    onClick = {
+                        val googleSignInClient = GoogleSignIn.getClient(
+                            context,
+                            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                                .requestIdToken(context.getString(R.string.default_web_client_id))
+                                .requestEmail()
+                                .build()
+                        )
+                        googleSignInClient.signOut().addOnCompleteListener {
+                            googleSignInClient.revokeAccess().addOnCompleteListener {
+                                FirebaseAuth.getInstance().signOut()
+                                onLogoutClick()
+                            }
                         }
-                    }
-                },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.White,
-                    contentColor = Color.Black
-                ),
-                shape = RoundedCornerShape(12.dp)
-            ) {
-                Text("LOGOUT")
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.White,
+                        contentColor = Color.Black
+                    ),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Text("LOGOUT")
+                }
             }
         }
 
+        // Título principal
         Text(
             text = "CocktailTime",
             style = MaterialTheme.typography.headlineLarge.copy(
                 fontSize = 45.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.White // Título blanco
+                color = Color.White
             ),
             modifier = modifier
                 .fillMaxWidth()
@@ -170,6 +165,7 @@ fun CocktailListScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(8.dp)
+
         ) {
             // Mostrar lista principal
             if (!vm.uiState.cocktailList.isNullOrEmpty()) {
