@@ -73,7 +73,7 @@ fun WelcomeScreen(navController: NavHostController) {
             // Imagen
             AsyncImage(
 
-                model = "https://sdmntprsouthcentralus.oaiusercontent.com/files/00000000-c418-61f7-b635-533175980b6f/raw?se=2025-06-18T00%3A30%3A20Z&sp=r&sv=2024-08-04&sr=b&scid=ffcaef8e-a2e8-5496-83db-b8c795d094e7&skoid=c953efd6-2ae8-41b4-a6d6-34b1475ac07c&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-06-17T23%3A16%3A35Z&ske=2025-06-18T23%3A16%3A35Z&sks=b&skv=2024-08-04&sig=soNSSaNjaCMxxJSCQp0SwGfaxxbx712ikDliqD1Kc0Q%3D",
+                model = "https://previews.123rf.com/images/rrraven/rrraven1512/rrraven151200003/49527926-vector-icono-de-c%C3%B3ctel-negro-sobre-fondo-blanco.jpg",
                 contentDescription = "Logo Cóctel",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
