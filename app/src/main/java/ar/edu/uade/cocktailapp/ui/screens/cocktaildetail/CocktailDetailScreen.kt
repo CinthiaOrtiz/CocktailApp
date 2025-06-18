@@ -117,6 +117,7 @@ fun CocktailDetailScreen(
 }
 
 // Composable que muestra los detalles del cóctel
+// CocktailUIItemDetail
 @Composable
 fun CocktailUIItemDetail(
     cocktail: Cocktail,

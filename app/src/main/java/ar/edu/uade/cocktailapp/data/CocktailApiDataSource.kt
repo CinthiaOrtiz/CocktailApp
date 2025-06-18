@@ -39,7 +39,7 @@ class CocktailApiDataSource : ICocktailDataSource {
 
     // RECUPERO CÓCTEL POR ID
     override suspend fun getCocktailById(cocktailId: Int): Cocktail {
-        Log.d("DEBUG_ORIGEN", "🟡 Llamada a getCocktailById con ID: $cocktailId")
+        Log.d("DEBUG_ORIGEN", "Llamada a getCocktailById con ID: $cocktailId")
 
         val db = FirebaseFirestore.getInstance()
         val docRef = db.collection("Favoritos").document(cocktailId.toString())

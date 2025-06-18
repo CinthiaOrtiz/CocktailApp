@@ -16,7 +16,7 @@ import ar.edu.uade.cocktailapp.ui.screens.favorites.FavoriteListScreen
 @Composable
 fun NavigationStack(
     navController: NavHostController,
-    onGoogleLoginClick: (onSuccess: () -> Unit) -> Unit, // ✅ Modificado para aceptar onSuccess
+    onGoogleLoginClick: (onSuccess: () -> Unit) -> Unit,
     onLogoutClick: () -> Unit,
     userSignedIn: Boolean
 ) {
@@ -73,7 +73,7 @@ fun NavigationStack(
                 navController = navController
             )
         }
-
+        // Pantalla FAVORITOS
         composable(route = Screens.Favorites.route) {
             FavoriteListScreen(navController = navController)
         }

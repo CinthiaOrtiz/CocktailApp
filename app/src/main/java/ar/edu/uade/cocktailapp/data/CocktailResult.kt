@@ -5,10 +5,6 @@ data class CocktailResult(
     val drinks: List<Cocktail>?
 )
 
-data class CocktailDetailResult (
-    val drinks : Cocktail
-)
-
 
 data class CocktailResponse(
     val drinks: List<Cocktail>

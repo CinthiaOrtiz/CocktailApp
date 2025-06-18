@@ -15,11 +15,11 @@ interface ICocktailAPI {
     ): CocktailResult
 
 
-
     @GET("lookup.php")
     suspend fun getCocktail (
         @Query("i") cocktailId: Int
     ) : CocktailResult
+
 
     @GET("random.php")
     suspend fun getRandomCocktail(): CocktailResponse

@@ -50,6 +50,8 @@ fun LoginScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
+            Spacer(modifier = Modifier.height(20.dp))
+
             // Texto superior
             Text(
                 text = "LOGIN",
@@ -57,9 +59,16 @@ fun LoginScreen(
                 fontSize = 45.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
-                lineHeight = 38.sp,
-                modifier = Modifier.padding(top = 32.dp)
+                lineHeight = 40.sp,
+                //modifier = Modifier.padding(top = 32.dp),
             )
+            Text(
+                text = "Sign in to access the app",
+                color = Color.White.copy(alpha = 0.7f),
+                fontSize = 20.sp,
+                textAlign = TextAlign.Center
+            )
+
 
             // Imagen
             AsyncImage(
@@ -88,7 +97,7 @@ fun LoginScreen(
 
                 Button(
                     onClick = {
-                        // ✅ Llama a onGoogleLoginClick y navega al home si fue exitoso
+                        // Llama a onGoogleLoginClick y navega al home si fue exitoso
                         onGoogleLoginClick {
                             navController.navigate(Screens.CocktailList.route) {
                                 popUpTo(Screens.Login.route) { inclusive = true }

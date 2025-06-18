@@ -29,10 +29,12 @@ import androidx.navigation.NavHostController
 import ar.edu.uade.cocktailapp.ui.screens.Screens
 import ar.edu.uade.cocktailapp.ui.screens.cocktaildetail.CocktailDetailScreenViewModel
 import coil.compose.AsyncImage
+
+
 @Composable
 fun WelcomeScreen(navController: NavHostController) {
 
-    val vm: CocktailDetailScreenViewModel = viewModel() // ✅ ViewModel obtenido correctamente
+    val vm: CocktailDetailScreenViewModel = viewModel()
 
     Box(
         modifier = Modifier
@@ -77,9 +79,9 @@ fun WelcomeScreen(navController: NavHostController) {
                 contentDescription = "Logo Cóctel",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(400.dp) // Ajuste leve del tamaño
+                    .size(400.dp)
                     .clip(RoundedCornerShape(20.dp))
-                    .padding(horizontal = 16.dp) // o el valor que prefieras
+                    .padding(horizontal = 16.dp)
             )
 
             // Frase + botón

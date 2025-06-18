@@ -7,6 +7,5 @@ sealed class Screens(val route: String) {
     object Login : Screens("login")
     object CocktailList : Screens("cocktail_list_screen")
     object CocktailDetail : Screens("cocktail_detail_screen")
-
     object Favorites : Screens("favorite_list_screen")
 }

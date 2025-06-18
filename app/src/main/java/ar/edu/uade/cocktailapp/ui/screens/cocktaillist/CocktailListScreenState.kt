@@ -6,5 +6,5 @@ data class CocktailListScreenState(
     val cocktailList: List<Cocktail> = emptyList(),
     val searchQuery: String = "",
     val isLoading: Boolean = false,
-    val userName: String? = null // puede seguir siendo opcional si no siempre se usa
+    val userName: String? = null
 )
