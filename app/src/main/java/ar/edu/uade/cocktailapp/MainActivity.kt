@@ -17,6 +17,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import ar.edu.uade.cocktailapp.data.local.CocktailDataBaseProvider
+import ar.edu.uade.cocktailapp.data.local.CocktailDatabase
 import ar.edu.uade.cocktailapp.ui.screens.NavigationStack
 import ar.edu.uade.cocktailapp.ui.screens.Screens
 import ar.edu.uade.cocktailapp.ui.theme.CocktailAppTheme
@@ -35,6 +37,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        //BaseProvider.createDataBase(applicationContext)
+
+        //CocktailDataBaseProvider.createDataBase(this)
+        CocktailDataBaseProvider.createDataBase(applicationContext)
 
         googleSignInClient = GoogleSignIn.getClient(
             this,

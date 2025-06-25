@@ -13,6 +13,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -280,5 +281,23 @@ fun CocktailUIItemDetail(
                 Text("BACK")
             }
         }
-    }
+         /*
+         val context = LocalContext.current
+
+         Button(
+             onClick = {
+                 viewModel.clearRoomDatabase(context)
+             },
+             colors = ButtonDefaults.buttonColors(
+                 containerColor = Color.Red,
+                 contentColor = Color.White
+             ),
+             modifier = Modifier
+                 .padding(top = 16.dp)
+         ) {
+             Text("BORRAR BASE ROOM")
+         } */
+
+
+     }
 }

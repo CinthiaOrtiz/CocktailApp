@@ -9,12 +9,15 @@ import ar.edu.uade.cocktailapp.data.Cocktail
 import ar.edu.uade.cocktailapp.data.CocktailApiDataSource
 import ar.edu.uade.cocktailapp.data.CocktailRepository
 import ar.edu.uade.cocktailapp.data.RetrofitInstance
+import ar.edu.uade.cocktailapp.data.local.CocktailDatabase
 import ar.edu.uade.cocktailapp.domain.ICocktailRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import android.content.Context
+import kotlinx.coroutines.Dispatchers
 
 class CocktailDetailScreenViewModel(
     private val cocktailRepository: ICocktailRepository = CocktailRepository(CocktailApiDataSource())
@@ -129,6 +132,14 @@ class CocktailDetailScreenViewModel(
             }
         }
     }
+
+    fun clearRoomDatabase(context: Context) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val db = CocktailDatabase.getInstance(context)
+            db.clearAllTables()
+        }
+    }
+
 
 
 }

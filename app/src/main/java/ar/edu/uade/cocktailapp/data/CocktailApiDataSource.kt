@@ -1,6 +1,10 @@
 package ar.edu.uade.cocktailapp.data
 
 import android.util.Log
+import ar.edu.uade.cocktailapp.data.local.CocktailDataBaseProvider
+import ar.edu.uade.cocktailapp.data.local.CocktailDatabase
+import ar.edu.uade.cocktailapp.data.local.toExternal
+import ar.edu.uade.cocktailapp.data.local.toLocal
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import okio.IOException
@@ -42,16 +46,34 @@ class CocktailApiDataSource : ICocktailDataSource {
         Log.d("DEBUG_ORIGEN", "Llamada a getCocktailById con ID: $cocktailId")
 
         val db = FirebaseFirestore.getInstance()
-        val docRef = db.collection("Favoritos").document(cocktailId.toString())
+        val dbLocal = CocktailDataBaseProvider.dbLocal
 
+        //ROOM
+
+        var cocktailLocal = dbLocal.cocktailDao().findById(cocktailId)
+        if (cocktailLocal != null) {
+            Log.d("COCKTAILDB", "encontrado en Room")
+            return cocktailLocal.toExternal()
+        }
+
+
+
+
+        val docRef = db.collection("Favoritos").document(cocktailId.toString())
         // Intento buscar el cóctel en Firestore
         val snapshot = docRef.get().await()
         val cocktailFromFirestore = snapshot.toObject(Cocktail::class.java)
 
         if (cocktailFromFirestore != null) {
             Log.d("COCKTAILDB", "encontrado en Firestore")
+
+
+            val cocktailLocal = cocktailFromFirestore.toLocal()
+            dbLocal.cocktailDao().insert(cocktailLocal)
+
             return cocktailFromFirestore
-        } else {
+        }
+        else {
             Log.d("COCKTAILDB", "no encontrado en Firestore, llamando a la API")
 
             // Si no está, lo traigo desde la API
@@ -66,6 +88,10 @@ class CocktailApiDataSource : ICocktailDataSource {
 
             // Lo guardo en Firestore para la próxima vez
             docRef.set(cocktail)
+
+
+            val cocktailLocal = cocktail.toLocal()
+            dbLocal.cocktailDao().insert(cocktailLocal)
 
             return cocktail
         }

@@ -5,8 +5,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    id("org.jetbrains.kotlin.kapt") // anotaciones de Glide
+    //id("org.jetbrains.kotlin.kapt") // anotaciones de Glide
     id("com.google.gms.google-services")
+    kotlin("kapt")
 }
 
 android {
@@ -68,6 +69,21 @@ dependencies {
 
     //GLIDE
     implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation(libs.androidx.room.common)
+
+    implementation(libs.androidx.room.compiler){
+        exclude(group = "com.intellij", module = "annotations")
+    }
+
+
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.migration)
+
+    implementation(libs.androidx.room.runtime){
+        exclude(group = "com.intellij", module = "annotations")
+    }
+
+
     kapt("com.github.bumptech.glide:compiler:4.16.0")
 
 
@@ -98,4 +114,5 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    kapt(libs.androidx.room.compiler)
 }
