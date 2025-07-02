@@ -3,8 +3,10 @@ package ar.edu.uade.cocktailapp.ui.screens
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import ar.edu.uade.cocktailapp.ui.screens.cocktaillist.CocktailListScreen
 import ar.edu.uade.cocktailapp.ui.screens.Welcome.WelcomeScreen
 import ar.edu.uade.cocktailapp.ui.screens.login.LoginScreen
@@ -77,6 +79,20 @@ fun NavigationStack(
         composable(route = Screens.Favorites.route) {
             FavoriteListScreen(navController = navController)
         }
+
+        // Detalle de cóctel
+        composable(
+            route = Screens.CocktailDetail.route + "/{cocktailId}",
+            arguments = listOf(navArgument("cocktailId") { type = NavType.IntType })
+        ) {
+            val cocktailId = it.arguments?.getInt("cocktailId") ?: 0
+            CocktailDetailScreen(
+                cocktailId = cocktailId,
+                navController = navController
+            )
+        }
+
+
 
 
 

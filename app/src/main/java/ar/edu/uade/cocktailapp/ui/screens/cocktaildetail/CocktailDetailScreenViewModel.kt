@@ -19,6 +19,8 @@ import kotlinx.coroutines.launch
 import android.content.Context
 import kotlinx.coroutines.Dispatchers
 
+
+
 class CocktailDetailScreenViewModel(
     private val cocktailRepository: ICocktailRepository = CocktailRepository(CocktailApiDataSource())
 ) : ViewModel() {
@@ -61,9 +63,12 @@ class CocktailDetailScreenViewModel(
 
         fetchCocktail()
 
-        // 🔁 Verificamos si es favorito en Firebase y actualizamos el estado
-        isFavorite(cocktailId.toString()) { favorite ->
-            uiState = uiState.copy(isFavorite = favorite)
+        // 🔁 Verificamos si es favorito en Firebase y actualizamos el estado SOLO si el usuario está logueado
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser != null) {
+            isFavorite(cocktailId.toString()) { favorite ->
+                uiState = uiState.copy(isFavorite = favorite)
+            }
         }
     }
 
@@ -104,8 +109,6 @@ class CocktailDetailScreenViewModel(
             }
     }
 
-
-
     fun isFavorite(cocktailId: String, onResult: (Boolean) -> Unit) {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
         FirebaseFirestore.getInstance()
@@ -139,7 +142,4 @@ class CocktailDetailScreenViewModel(
             db.clearAllTables()
         }
     }
-
-
-
 }
